@@ -1,8 +1,8 @@
 package no.njanor.gameoflife.gamelogic;
 
 public class Coordinate {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -10,9 +10,22 @@ public class Coordinate {
     }
 
     @Override
+    public int hashCode() {
+        return x + y;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof Coordinate
                 && ((Coordinate) obj).x == x
                 && ((Coordinate) obj).y == y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

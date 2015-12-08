@@ -44,4 +44,27 @@ public class GridTest {
         assertTrue(livingCells.contains(new Cell(new Coordinate(2, 1), true)));
         assertTrue(livingCells.contains(new Cell(new Coordinate(2, 2), true)));
     }
+
+    @Test
+    public void constructGrid_withNullAsSeed_CreatesWithoutSeed() {
+        Grid grid = new Grid(null);
+
+        assertEquals(0, grid.getAllLivingCells().size());
+    }
+
+    @Test
+    public void getNumberOfLivingNeighboursForCell_withNoLivingNeighbours_returnsZero() {
+        Grid grid = new Grid(null);
+
+        grid.getNumberOfLivingNeighbours(new Coordinate(0, 0));
+    }
+
+    @Test
+    public void getNumberOfLivingNeighboursForCell_withThreeLivingneighbours_returnsThree() {
+        Grid grid = new Grid(new boolean[][]{{true, true, true}}); // 0,0-2
+
+        int numberOfLivingNeighboursToCellAtOneOne = grid.getNumberOfLivingNeighbours(new Coordinate(1, 1));
+
+        assertEquals(3, numberOfLivingNeighboursToCellAtOneOne);
+    }
 }
