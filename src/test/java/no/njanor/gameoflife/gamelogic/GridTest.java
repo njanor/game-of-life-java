@@ -67,4 +67,41 @@ public class GridTest {
 
         assertEquals(3, numberOfLivingNeighboursToCellAtOneOne);
     }
+
+    @Test
+    public void getNumberOfLivingNeighboursForCell_withNoNeighboursButLiveCellsAtDistanceTwo_returnsZero() {
+        Grid grid = new Grid(new boolean[][]{
+                {true,  true,   true,   true,   true},
+                {true,  false,  false,  false,  true},
+                {true,  false,  true,   false,  true},
+                {true,  false,  false,  false,  true},
+                {true,  true,   true,   true,   true},
+        });
+
+        int numberOfLivingneigboursToCellAtTwoTwo = grid.getNumberOfLivingNeighbours(new Coordinate(2, 2));
+
+        assertEquals(0, numberOfLivingneigboursToCellAtTwoTwo);
+    }
+
+    @Test
+    public void getNumberOfLivingCells_oneLivingCellInAllLocations_returnOne() {
+        Coordinate centerCoordinate = new Coordinate(1, 1);
+
+        for (int x = 0; x <= 2; x++)
+        {
+            for (int y = 0; y <= 2; y++)
+            {
+                Coordinate currentCoordinate = new Coordinate(x, y);
+                if (currentCoordinate.equals(centerCoordinate))
+                    continue;
+
+                boolean[][] seed = new boolean[3][3];
+                seed[x][y] = true;
+
+                Grid grid = new Grid(seed);
+
+                assertEquals(1, grid.getNumberOfLivingNeighbours(centerCoordinate));
+            }
+        }
+    }
 }
