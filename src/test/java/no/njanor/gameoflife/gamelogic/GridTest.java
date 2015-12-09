@@ -7,6 +7,21 @@ import java.util.Collection;
 import static org.junit.Assert.*;
 
 public class GridTest {
+
+    @Test
+    public void construct_withoutConstructorArgument_returnsNewGridWithNoLivingCells() {
+        Grid grid = new Grid();
+
+        assertEquals(0, grid.getAllLivingCells().size());
+    }
+
+    @Test
+    public void constructGrid_withNullAsSeed_CreatesWithoutSeed() {
+        Grid grid = new Grid(null);
+
+        assertEquals(0, grid.getAllLivingCells().size());
+    }
+
     @Test
     public void getAllLivingCells_WithNoLivingCells_ReturnsEmptyCollection() {
         Grid grid = new Grid(new boolean[][]{{false, false, false}, {false, false, false}, {false, false, false}});
@@ -43,13 +58,6 @@ public class GridTest {
         assertTrue(livingCells.contains(new Cell(new Coordinate(2, 0), true)));
         assertTrue(livingCells.contains(new Cell(new Coordinate(2, 1), true)));
         assertTrue(livingCells.contains(new Cell(new Coordinate(2, 2), true)));
-    }
-
-    @Test
-    public void constructGrid_withNullAsSeed_CreatesWithoutSeed() {
-        Grid grid = new Grid(null);
-
-        assertEquals(0, grid.getAllLivingCells().size());
     }
 
     @Test

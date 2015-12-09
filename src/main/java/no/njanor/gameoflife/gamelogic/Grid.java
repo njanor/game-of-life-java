@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Grid {
     private HashMap<Coordinate, Boolean> grid = new HashMap<Coordinate, Boolean>();
 
+    public Grid() { }
+
     public Grid(boolean[][] seed) {
         if (seed == null)
             return;
