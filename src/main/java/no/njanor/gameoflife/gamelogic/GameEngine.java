@@ -9,7 +9,8 @@ public class GameEngine {
         Collection<Cell> currentlyLivingCells = currentGameState.getAllLivingCells();
 
         for (Cell cell : currentlyLivingCells) {
-            if (currentGameState.getNumberOfLivingNeighbours(cell.getCoordinate()) == 2)
+            int livingNeighboursForCurrentCell = currentGameState.getNumberOfLivingNeighbours(cell.getCoordinate());
+            if (livingNeighboursForCurrentCell == 2 || livingNeighboursForCurrentCell == 3)
                 newGameState.setCell(cell);
         }
         return newGameState;
