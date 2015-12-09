@@ -1,11 +1,12 @@
 package no.njanor.gameoflife.gamelogic;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Grid {
-    private HashMap<Coordinate, Boolean> grid = new HashMap<Coordinate, Boolean>();
+    private Set<Coordinate> coordinatesOfLivingCells = new HashSet<>();
 
     public Grid() { }
 
@@ -15,18 +16,13 @@ public class Grid {
         for (int i = 0; i < seed.length; i++)
             for (int j = 0; j < seed[i].length; j++)
                 if (seed[i][j])
-                    grid.put(new Coordinate(i, j), true);
+                    coordinatesOfLivingCells.add(new Coordinate(i, j));
     }
 
     public Collection<Cell> getAllLivingCells() {
-        Collection<Cell> livingCells = new ArrayList<Cell>();
-
-        for (Coordinate coordinate :
-                grid.keySet()) {
-            livingCells.add(new Cell(coordinate, grid.get(coordinate)));
-        }
-
-        return livingCells;
+        return coordinatesOfLivingCells.stream()
+                .map(coordinate -> new Cell(coordinate, true))
+                .collect(Collectors.toList());
     }
 
     public int getNumberOfLivingNeighbours(Coordinate coordinate) {
@@ -34,7 +30,7 @@ public class Grid {
         for (int currentX = coordinate.getX() - 1; currentX <= coordinate.getX() + 1; currentX++)
             for (int currentY = coordinate.getY() - 1; currentY <= coordinate.getY() + 1; currentY++) {
                 Coordinate currentCoordinate = new Coordinate(currentX, currentY);
-                boolean hasLivingCell = grid.containsKey(currentCoordinate);
+                boolean hasLivingCell = coordinatesOfLivingCells.contains(currentCoordinate);
                 boolean isSameCoordinate = currentCoordinate.equals(coordinate);
                 if (hasLivingCell && !isSameCoordinate)
                     numberOfLivingNeighbours++;
@@ -43,12 +39,12 @@ public class Grid {
     }
 
     public Cell getCellAt(Coordinate coordinate) {
-        if (grid.containsKey(coordinate))
+        if (coordinatesOfLivingCells.contains(coordinate))
             return new Cell(coordinate, true);
         return new Cell(coordinate, false);
     }
 
     public void setCell(Cell cell) {
-        grid.put(cell.getCoordinate(), cell.isAlive());
+        coordinatesOfLivingCells.add(cell.getCoordinate());
     }
 }
