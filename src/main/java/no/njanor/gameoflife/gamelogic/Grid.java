@@ -47,4 +47,8 @@ public class Grid {
             return new Cell(coordinate, true);
         return new Cell(coordinate, false);
     }
+
+    public void setCell(Cell cell) {
+        grid.put(cell.getCoordinate(), cell.isAlive());
+    }
 }
