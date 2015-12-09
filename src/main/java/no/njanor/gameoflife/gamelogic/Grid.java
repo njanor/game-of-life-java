@@ -1,5 +1,6 @@
 package no.njanor.gameoflife.gamelogic;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,16 +27,9 @@ public class Grid {
     }
 
     public int getNumberOfLivingNeighbours(Coordinate coordinate) {
-        int numberOfLivingNeighbours = 0;
-        for (int currentX = coordinate.getX() - 1; currentX <= coordinate.getX() + 1; currentX++)
-            for (int currentY = coordinate.getY() - 1; currentY <= coordinate.getY() + 1; currentY++) {
-                Coordinate currentCoordinate = new Coordinate(currentX, currentY);
-                boolean hasLivingCell = coordinatesOfLivingCells.contains(currentCoordinate);
-                boolean isSameCoordinate = currentCoordinate.equals(coordinate);
-                if (hasLivingCell && !isSameCoordinate)
-                    numberOfLivingNeighbours++;
-            }
-        return numberOfLivingNeighbours;
+        return (int)getAllNeighboursToCoordinate(coordinate).stream()
+                .filter(c -> c.isAlive())
+                .count();
     }
 
     public Cell getCellAt(Coordinate coordinate) {
@@ -46,5 +40,18 @@ public class Grid {
 
     public void setCell(Cell cell) {
         coordinatesOfLivingCells.add(cell.getCoordinate());
+    }
+
+    public Collection<Cell> getAllNeighboursToCoordinate(Coordinate coordinate) {
+        Collection<Cell> neighbours = new ArrayList<>(8);
+
+        for (int currentX = coordinate.getX() - 1; currentX <= coordinate.getX() + 1; currentX++)
+            for (int currentY = coordinate.getY() - 1; currentY <= coordinate.getY() + 1; currentY++) {
+                Coordinate currentCoordinate = new Coordinate(currentX, currentY);
+                if (currentCoordinate.equals(coordinate))
+                    continue;
+                neighbours.add(getCellAt(currentCoordinate));
+            }
+        return neighbours;
     }
 }

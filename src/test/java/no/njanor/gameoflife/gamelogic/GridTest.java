@@ -3,6 +3,7 @@ package no.njanor.gameoflife.gamelogic;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -133,5 +134,24 @@ public class GridTest {
 
         assertFalse(cell.isAlive());
         assertEquals(coordinate, cell.getCoordinate());
+    }
+
+    @Test
+    public void getAllNeighbours_forAGivenCoordinate_returnsAllItsNeighbouringCells() {
+        Grid grid = new Grid(new boolean[][]{
+                {false, true},
+                {true, true}
+        });
+
+        Collection<Cell> neighbours = grid.getAllNeighboursToCoordinate(new Coordinate(0, 0));
+
+        assertTrue(neighbours.contains(new Cell(new Coordinate(-1, -1), false)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate(-1,  0), false)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate(-1,  1), false)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate( 0, -1), false)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate( 0,  1), true)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate( 1, -1), false)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate( 1,  0), true)));
+        assertTrue(neighbours.contains(new Cell(new Coordinate( 1,  1), true)));
     }
 }
