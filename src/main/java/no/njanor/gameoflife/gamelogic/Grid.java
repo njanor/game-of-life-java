@@ -39,4 +39,10 @@ public class Grid {
             }
         return numberOfLivingNeighbours;
     }
+
+    public Cell getCellAt(Coordinate coordinate) {
+        if (grid.containsKey(coordinate))
+            return new Cell(coordinate, true);
+        return new Cell(coordinate, false);
+    }
 }

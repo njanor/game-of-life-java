@@ -104,4 +104,26 @@ public class GridTest {
             }
         }
     }
+
+    @Test
+    public void getCellAtCoordinate_cellIsAlive_returnsLivingCellWithCorrectCoordinates() {
+        Grid grid = new Grid(new boolean[][]{{true}});
+        Coordinate coordinate = new Coordinate(0, 0);
+
+        Cell cell = grid.getCellAt(coordinate);
+
+        assertTrue(cell.isAlive());
+        assertEquals(coordinate, cell.getCoordinate());
+    }
+
+    @Test
+    public void getCellAtCoordinate_cellIsDead_returnsDeadCellWithCorrectCoordinates() {
+        Grid grid = new Grid(new boolean[][]{{false}});
+        Coordinate coordinate = new Coordinate(10, -20);
+
+        Cell cell = grid.getCellAt(coordinate);
+
+        assertFalse(cell.isAlive());
+        assertEquals(coordinate, cell.getCoordinate());
+    }
 }

@@ -19,4 +19,8 @@ public class Cell {
                 ((Cell) obj).coordinate.equals(coordinate) &&
                 ((Cell) obj).isAlive == isAlive;
     }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 }
