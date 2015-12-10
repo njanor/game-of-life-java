@@ -15,12 +15,12 @@ public class GameStateTest {
         assertEquals(0, gameState.getAllLivingCells().size());
     }
 
-    @Test
-    public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
-        GameState gameState = new GameState(null);
+    //@Test
+    //public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
+    //    GameState gameState = new GameState(null);
 
-        assertEquals(0, gameState.getAllLivingCells().size());
-    }
+    //    assertEquals(0, gameState.getAllLivingCells().size());
+    //}
 
     @Test
     public void getAllLivingCells_WithNoLivingCells_ReturnsEmptyCollection() {
@@ -33,7 +33,7 @@ public class GameStateTest {
 
     @Test
     public void getAllLivingCells_WithSingleLivingCell_ReturnsSingleCell() {
-        GameState gameState = new GameState(new boolean[][]{{true}});
+        GameState gameState = new GameState(new Coordinate(0,0));
 
         Collection<Cell> livingCells = gameState.getAllLivingCells();
 
@@ -43,33 +43,49 @@ public class GameStateTest {
 
     @Test
     public void getAllLivingCells_withMultipleLivingCells_returnsAllLivingCellsAtCorrectCoordinates() {
-        GameState gameState = new GameState(new boolean[][]{
-                {true,  true,   true},  // 0,0 - 0,1 - 0,2
-                {false, false,  false}, // 1,0 - 1,1 - 1,2
-                {true,  true,   true}});// 2,0 - 2,1 - 2,2
+
+        Coordinate firstCoordinate  = new Coordinate(0, 0);
+        Coordinate secondCoordinate = new Coordinate(0, 1);
+        Coordinate thirdCoordinate  = new Coordinate(0, 2);
+        Coordinate fourthCoordinate = new Coordinate(2, 0);
+        Coordinate fifthCoordinate  = new Coordinate(2, 1);
+        Coordinate sixthCoordinate  = new Coordinate(2, 2);
+
+        GameState gameState = new GameState(
+                firstCoordinate,
+                secondCoordinate,
+                thirdCoordinate,
+                fourthCoordinate,
+                fifthCoordinate,
+                sixthCoordinate
+        );
 
         Collection<Cell> livingCells = gameState.getAllLivingCells();
 
         assertEquals(6, livingCells.size());
 
-        assertTrue(livingCells.contains(new Cell(new Coordinate(0, 0), true)));
-        assertTrue(livingCells.contains(new Cell(new Coordinate(0, 1), true)));
-        assertTrue(livingCells.contains(new Cell(new Coordinate(0, 2), true)));
-        assertTrue(livingCells.contains(new Cell(new Coordinate(2, 0), true)));
-        assertTrue(livingCells.contains(new Cell(new Coordinate(2, 1), true)));
-        assertTrue(livingCells.contains(new Cell(new Coordinate(2, 2), true)));
+        assertTrue(livingCells.contains(new Cell(firstCoordinate, true)));
+        assertTrue(livingCells.contains(new Cell(secondCoordinate, true)));
+        assertTrue(livingCells.contains(new Cell(thirdCoordinate, true)));
+        assertTrue(livingCells.contains(new Cell(fourthCoordinate, true)));
+        assertTrue(livingCells.contains(new Cell(fifthCoordinate, true)));
+        assertTrue(livingCells.contains(new Cell(sixthCoordinate, true)));
     }
 
     @Test
     public void getNumberOfLivingNeighboursForCell_withNoLivingNeighbours_returnsZero() {
-        GameState gameState = new GameState(null);
+        GameState gameState = new GameState();
 
         gameState.getNumberOfLivingNeighbours(new Coordinate(0, 0));
     }
 
     @Test
-    public void getNumberOfLivingNeighboursForCell_withThreeLivingneighbours_returnsThree() {
-        GameState gameState = new GameState(new boolean[][]{{true, true, true}}); // 0,0-2
+    public void getNumberOfLivingNeighboursForCell_withThreeLivingNeighbours_returnsThree() {
+        GameState gameState = new GameState(
+                new Coordinate(0, 0),
+                new Coordinate(0, 1),
+                new Coordinate(0, 2)
+        );
 
         int numberOfLivingNeighboursToCellAtOneOne = gameState.getNumberOfLivingNeighbours(new Coordinate(1, 1));
 
@@ -78,35 +94,44 @@ public class GameStateTest {
 
     @Test
     public void getNumberOfLivingNeighboursForCell_withNoNeighboursButLiveCellsAtDistanceTwo_returnsZero() {
-        GameState gameState = new GameState(new boolean[][]{
-                {true,  true,   true,   true,   true},
-                {true,  false,  false,  false,  true},
-                {true,  false,  true,   false,  true},
-                {true,  false,  false,  false,  true},
-                {true,  true,   true,   true,   true},
-        });
+        GameState gameState = new GameState(
+                new Coordinate(-2, -2),
+                new Coordinate(-2, -1),
+                new Coordinate(-2,  0),
+                new Coordinate(-2,  1),
+                new Coordinate(-2,  2),
+                new Coordinate(-1, -2),
+                new Coordinate(-1,  2),
+                new Coordinate( 0, -2),
+                new Coordinate( 0,  0),
+                new Coordinate( 0,  2),
+                new Coordinate( 1, -2),
+                new Coordinate( 1,  2),
+                new Coordinate( 2, -2),
+                new Coordinate( 2, -1),
+                new Coordinate( 2,  0),
+                new Coordinate( 2,  1),
+                new Coordinate( 2,  2)
+        );
 
-        int numberOfLivingneigboursToCellAtTwoTwo = gameState.getNumberOfLivingNeighbours(new Coordinate(2, 2));
+        int numberOfLivingNeighbours = gameState.getNumberOfLivingNeighbours(new Coordinate(0, 0));
 
-        assertEquals(0, numberOfLivingneigboursToCellAtTwoTwo);
+        assertEquals(0, numberOfLivingNeighbours);
     }
 
     @Test
     public void getNumberOfLivingCells_oneLivingCellInAllLocations_returnOne() {
-        Coordinate centerCoordinate = new Coordinate(1, 1);
+        Coordinate centerCoordinate = new Coordinate(0, 0);
 
-        for (int x = 0; x <= 2; x++)
+        for (int x = -1; x <= 1; x++)
         {
-            for (int y = 0; y <= 2; y++)
+            for (int y = -1; y <= 1; y++)
             {
                 Coordinate currentCoordinate = new Coordinate(x, y);
                 if (currentCoordinate.equals(centerCoordinate))
                     continue;
 
-                boolean[][] seed = new boolean[3][3];
-                seed[x][y] = true;
-
-                GameState gameState = new GameState(seed);
+                GameState gameState = new GameState(currentCoordinate);
 
                 assertEquals(1, gameState.getNumberOfLivingNeighbours(centerCoordinate));
             }
@@ -115,8 +140,8 @@ public class GameStateTest {
 
     @Test
     public void getCellAtCoordinate_cellIsAlive_returnsLivingCellWithCorrectCoordinates() {
-        GameState gameState = new GameState(new boolean[][]{{true}});
         Coordinate coordinate = new Coordinate(0, 0);
+        GameState gameState = new GameState(coordinate);
 
         Cell cell = gameState.getCellAt(coordinate);
 
@@ -126,7 +151,7 @@ public class GameStateTest {
 
     @Test
     public void getCellAtCoordinate_cellIsDead_returnsDeadCellWithCorrectCoordinates() {
-        GameState gameState = new GameState(new boolean[][]{{false}});
+        GameState gameState = new GameState();
         Coordinate coordinate = new Coordinate(10, -20);
 
         Cell cell = gameState.getCellAt(coordinate);
@@ -137,10 +162,11 @@ public class GameStateTest {
 
     @Test
     public void getAllNeighbours_forAGivenCoordinate_returnsAllItsNeighbouringCells() {
-        GameState gameState = new GameState(new boolean[][]{
-                {false, true},
-                {true, true}
-        });
+        GameState gameState = new GameState(
+                new Coordinate(0, 1),
+                new Coordinate(1, 0),
+                new Coordinate(1, 1)
+        );
 
         Collection<Cell> neighbours = gameState.getAllNeighboursToCoordinate(new Coordinate(0, 0));
 

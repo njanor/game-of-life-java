@@ -1,9 +1,6 @@
 package no.njanor.gameoflife.gamelogic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameState {
@@ -18,6 +15,10 @@ public class GameState {
             for (int j = 0; j < seed[i].length; j++)
                 if (seed[i][j])
                     coordinatesOfLivingCells.add(new Coordinate(i, j));
+    }
+
+    public GameState(Coordinate... coordinates) {
+        coordinatesOfLivingCells.addAll(Arrays.asList(coordinates));
     }
 
     public Collection<Cell> getAllLivingCells() {
