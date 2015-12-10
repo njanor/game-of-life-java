@@ -15,16 +15,16 @@ public class GameStateTest {
         assertEquals(0, gameState.getAllLivingCells().size());
     }
 
-    //@Test
-    //public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
-    //    GameState gameState = new GameState(null);
+    @Test
+    public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
+        GameState gameState = new GameState(null);
 
-    //    assertEquals(0, gameState.getAllLivingCells().size());
-    //}
+        assertEquals(0, gameState.getAllLivingCells().size());
+    }
 
     @Test
     public void getAllLivingCells_WithNoLivingCells_ReturnsEmptyCollection() {
-        GameState gameState = new GameState(new boolean[][]{{false, false, false}, {false, false, false}, {false, false, false}});
+        GameState gameState = new GameState();
 
         Collection<Cell> livingCells = gameState.getAllLivingCells();
 

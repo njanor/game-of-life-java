@@ -8,17 +8,11 @@ public class GameState {
 
     public GameState() { }
 
-    public GameState(boolean[][] seed) {
-        if (seed == null)
-            return;
-        for (int i = 0; i < seed.length; i++)
-            for (int j = 0; j < seed[i].length; j++)
-                if (seed[i][j])
-                    coordinatesOfLivingCells.add(new Coordinate(i, j));
-    }
-
     public GameState(Coordinate... coordinates) {
-        coordinatesOfLivingCells.addAll(Arrays.asList(coordinates));
+        if (coordinates == null)
+            coordinatesOfLivingCells = new HashSet<>();
+        else
+            coordinatesOfLivingCells = Arrays.asList(coordinates).stream().filter(e -> e != null).collect(Collectors.toSet());
     }
 
     public Collection<Cell> getAllLivingCells() {
