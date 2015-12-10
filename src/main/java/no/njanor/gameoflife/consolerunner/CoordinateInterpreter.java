@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoordinateInterpreter {
-    public static List<Coordinate> fromString(final String input) {
+    public static List<Coordinate> interpretString(final String input) {
         return getRemainingCoordinates(new ArrayList<>(), input);
     }
 

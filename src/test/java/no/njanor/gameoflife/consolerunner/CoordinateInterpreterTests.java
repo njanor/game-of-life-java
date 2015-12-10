@@ -10,45 +10,45 @@ import static junit.framework.TestCase.assertTrue;
 
 public class CoordinateInterpreterTests {
     @Test
-    public void interpretCoordinates_emptyString_returnsEmptyList() {
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString("");
+    public void interpretString_emptyString_returnsEmptyList() {
+        List<Coordinate> coordinates = CoordinateInterpreter.interpretString("");
 
         assertEquals(0, coordinates.size());
     }
 
     @Test
-    public void fromString_stringIsNull_returnsEmptyList() {
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString(null);
+    public void interpretString_stringIsNull_returnsEmptyList() {
+        List<Coordinate> coordinates = CoordinateInterpreter.interpretString(null);
 
         assertEquals(0, coordinates.size());
     }
 
     @Test
-    public void fromString_stringHasOnePositiveCoordinateInIt_returnsListWithCorrectCoordinate() {
+    public void interpretString_stringHasOnePositiveCoordinateInIt_returnsListWithCorrectCoordinate() {
         Coordinate coordinate = new Coordinate(1, 3);
 
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString(coordinate.toString());
+        List<Coordinate> coordinates = CoordinateInterpreter.interpretString(coordinate.toString());
 
         assertEquals(1, coordinates.size());
         assertTrue(coordinates.contains(coordinate));
     }
 
     @Test
-    public void fromString_stringHasOneNegativeCoordinateInIt_returnsListWithCorrectCoordinate() {
+    public void interpretString_stringHasOneNegativeCoordinateInIt_returnsListWithCorrectCoordinate() {
         Coordinate coordinate = new Coordinate(-1, -20);
 
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString(coordinate.toString());
+        List<Coordinate> coordinates = CoordinateInterpreter.interpretString(coordinate.toString());
 
         assertEquals(1, coordinates.size());
         assertTrue(coordinates.contains(coordinate));
     }
 
     @Test
-    public void fromString_stringHasTwoCoordinatesInIt_returnsListWithCorrectCoordinates() {
+    public void interpretString_stringHasTwoCoordinatesInIt_returnsListWithCorrectCoordinates() {
         Coordinate firstCoordinate = new Coordinate(12, 34);
         Coordinate secondCoordinate = new Coordinate(-4, -1204);
 
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString(firstCoordinate + ", " + secondCoordinate);
+        List<Coordinate> coordinates = CoordinateInterpreter.interpretString(firstCoordinate + ", " + secondCoordinate);
 
         assertEquals(2, coordinates.size());
         assertTrue(coordinates.contains(firstCoordinate));
