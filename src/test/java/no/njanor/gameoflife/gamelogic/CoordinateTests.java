@@ -15,4 +15,11 @@ public class CoordinateTests {
 
         assertEquals(coordinate1, coordinate2);
     }
+
+    @Test
+    public void toString_withAValidCoordinate_returnsReasonablyFormattedString() {
+        Coordinate coordinate = new Coordinate(23, 312);
+
+        assertEquals("(23, 312)", coordinate.toString());
+    }
 }

@@ -9,6 +9,19 @@ public class Coordinate {
         this.y = y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + getX() + ", " + getY() + ")";
+    }
+
     @Override
     public int hashCode() {
         return x + y;
@@ -19,13 +32,5 @@ public class Coordinate {
         return obj instanceof Coordinate
                 && ((Coordinate) obj).x == x
                 && ((Coordinate) obj).y == y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }
