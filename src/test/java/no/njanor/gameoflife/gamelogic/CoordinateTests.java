@@ -1,5 +1,6 @@
 package no.njanor.gameoflife.gamelogic;
 
+import junit.framework.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -21,5 +22,12 @@ public class CoordinateTests {
         Coordinate coordinate = new Coordinate(23, 312);
 
         assertEquals("(23, 312)", coordinate.toString());
+    }
+
+    @Test
+    public void fromString_withAValidCoordinateString_returnsCorrectCoordinate() {
+        Coordinate coordinate = Coordinate.fromString("(2, 4)");
+
+        assertEquals(new Coordinate(2, 4), coordinate);
     }
 }
