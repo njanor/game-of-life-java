@@ -1,26 +1,31 @@
 package no.njanor.gameoflife.gamelogic;
 
 public class Cell {
-    private Coordinate coordinate;
-    private boolean isAlive;
+    private final Coordinate coordinate;
+    private final boolean alive;
 
-    public Cell(Coordinate coordinate, boolean isAlive) {
+    public Cell(Coordinate coordinate, boolean alive) {
         this.coordinate = coordinate;
-        this.isAlive = isAlive;
+        this.alive = alive;
     }
 
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Cell &&
                 ((Cell) obj).coordinate.equals(coordinate) &&
-                ((Cell) obj).isAlive == isAlive;
+                ((Cell) obj).alive == alive;
     }
 
-    public boolean isAlive() {
-        return isAlive;
+    @Override
+    public int hashCode() {
+        return alive ? 0 : 1 + coordinate.hashCode();
     }
 }

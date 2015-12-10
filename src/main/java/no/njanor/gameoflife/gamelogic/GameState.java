@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Grid {
+public class GameState {
     private Set<Coordinate> coordinatesOfLivingCells = new HashSet<>();
 
-    public Grid() { }
+    public GameState() { }
 
-    public Grid(boolean[][] seed) {
+    public GameState(boolean[][] seed) {
         if (seed == null)
             return;
         for (int i = 0; i < seed.length; i++)

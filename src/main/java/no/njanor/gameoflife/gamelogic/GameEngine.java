@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public class GameEngine {
 
-    public static Grid evolve(Grid currentGameState) {
-        Grid newGameState = new Grid();
+    public static GameState evolve(GameState currentGameState) {
+        GameState newGameState = new GameState();
         Collection<Cell> currentlyLivingCells = currentGameState.getAllLivingCells();
 
         for (Cell cell : currentlyLivingCells) {
@@ -15,14 +15,14 @@ public class GameEngine {
         return newGameState;
     }
 
-    private static void determineIfCellAndAllNeighboursShouldBeAliveInNextState(Grid currentGameState, Grid newGameState, Cell cell) {
+    private static void determineIfCellAndAllNeighboursShouldBeAliveInNextState(GameState currentGameState, GameState newGameState, Cell cell) {
         Collection<Cell> cellAndAllNeighbours = new ArrayList<>(currentGameState.getAllNeighboursToCoordinate(cell.getCoordinate()));
         cellAndAllNeighbours.add(cell);
 
         cellAndAllNeighbours.stream().forEach(c -> determineIfCellShouldLiveInNextState(currentGameState, newGameState, c));
     }
 
-    private static void determineIfCellShouldLiveInNextState(Grid currentGameState, Grid newGameState, Cell cell) {
+    private static void determineIfCellShouldLiveInNextState(GameState currentGameState, GameState newGameState, Cell cell) {
         int livingNeighboursForCurrentCell = currentGameState.getNumberOfLivingNeighbours(cell.getCoordinate());
         if (livingNeighboursForCurrentCell == 3 || (cell.isAlive() && livingNeighboursForCurrentCell == 2))
             newGameState.setCell(cell);

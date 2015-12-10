@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'pmd'
 
 mainClassName = "no.njanor.gameoflife.consolerunner.Runner"
 
@@ -10,3 +11,10 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 }
+
+pmd {
+    ignoreFailures = true
+    ruleSets = ['java-codesize', 'java-design', 'java-naming', 'java-coupling', 'java-basic']
+}
+
+defaultTasks 'clean', 'pmdMain', 'build'

@@ -3,40 +3,39 @@ package no.njanor.gameoflife.gamelogic;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-public class GridTest {
+public class GameStateTest {
 
     @Test
-    public void construct_withoutConstructorArgument_returnsNewGridWithNoLivingCells() {
-        Grid grid = new Grid();
+    public void construct_withoutConstructorArgument_returnsNewGameStateWithNoLivingCells() {
+        GameState gameState = new GameState();
 
-        assertEquals(0, grid.getAllLivingCells().size());
+        assertEquals(0, gameState.getAllLivingCells().size());
     }
 
     @Test
-    public void constructGrid_withNullAsSeed_CreatesWithoutSeed() {
-        Grid grid = new Grid(null);
+    public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
+        GameState gameState = new GameState(null);
 
-        assertEquals(0, grid.getAllLivingCells().size());
+        assertEquals(0, gameState.getAllLivingCells().size());
     }
 
     @Test
     public void getAllLivingCells_WithNoLivingCells_ReturnsEmptyCollection() {
-        Grid grid = new Grid(new boolean[][]{{false, false, false}, {false, false, false}, {false, false, false}});
+        GameState gameState = new GameState(new boolean[][]{{false, false, false}, {false, false, false}, {false, false, false}});
 
-        Collection<Cell> livingCells = grid.getAllLivingCells();
+        Collection<Cell> livingCells = gameState.getAllLivingCells();
 
         assertEquals(0, livingCells.size());
     }
 
     @Test
     public void getAllLivingCells_WithSingleLivingCell_ReturnsSingleCell() {
-        Grid grid = new Grid(new boolean[][]{{true}});
+        GameState gameState = new GameState(new boolean[][]{{true}});
 
-        Collection<Cell> livingCells = grid.getAllLivingCells();
+        Collection<Cell> livingCells = gameState.getAllLivingCells();
 
         assertEquals(1, livingCells.size());
         assertEquals(new Coordinate(0, 0), livingCells.iterator().next().getCoordinate());
@@ -44,12 +43,12 @@ public class GridTest {
 
     @Test
     public void getAllLivingCells_withMultipleLivingCells_returnsAllLivingCellsAtCorrectCoordinates() {
-        Grid grid = new Grid(new boolean[][]{
+        GameState gameState = new GameState(new boolean[][]{
                 {true,  true,   true},  // 0,0 - 0,1 - 0,2
                 {false, false,  false}, // 1,0 - 1,1 - 1,2
                 {true,  true,   true}});// 2,0 - 2,1 - 2,2
 
-        Collection<Cell> livingCells = grid.getAllLivingCells();
+        Collection<Cell> livingCells = gameState.getAllLivingCells();
 
         assertEquals(6, livingCells.size());
 
@@ -63,23 +62,23 @@ public class GridTest {
 
     @Test
     public void getNumberOfLivingNeighboursForCell_withNoLivingNeighbours_returnsZero() {
-        Grid grid = new Grid(null);
+        GameState gameState = new GameState(null);
 
-        grid.getNumberOfLivingNeighbours(new Coordinate(0, 0));
+        gameState.getNumberOfLivingNeighbours(new Coordinate(0, 0));
     }
 
     @Test
     public void getNumberOfLivingNeighboursForCell_withThreeLivingneighbours_returnsThree() {
-        Grid grid = new Grid(new boolean[][]{{true, true, true}}); // 0,0-2
+        GameState gameState = new GameState(new boolean[][]{{true, true, true}}); // 0,0-2
 
-        int numberOfLivingNeighboursToCellAtOneOne = grid.getNumberOfLivingNeighbours(new Coordinate(1, 1));
+        int numberOfLivingNeighboursToCellAtOneOne = gameState.getNumberOfLivingNeighbours(new Coordinate(1, 1));
 
         assertEquals(3, numberOfLivingNeighboursToCellAtOneOne);
     }
 
     @Test
     public void getNumberOfLivingNeighboursForCell_withNoNeighboursButLiveCellsAtDistanceTwo_returnsZero() {
-        Grid grid = new Grid(new boolean[][]{
+        GameState gameState = new GameState(new boolean[][]{
                 {true,  true,   true,   true,   true},
                 {true,  false,  false,  false,  true},
                 {true,  false,  true,   false,  true},
@@ -87,7 +86,7 @@ public class GridTest {
                 {true,  true,   true,   true,   true},
         });
 
-        int numberOfLivingneigboursToCellAtTwoTwo = grid.getNumberOfLivingNeighbours(new Coordinate(2, 2));
+        int numberOfLivingneigboursToCellAtTwoTwo = gameState.getNumberOfLivingNeighbours(new Coordinate(2, 2));
 
         assertEquals(0, numberOfLivingneigboursToCellAtTwoTwo);
     }
@@ -107,19 +106,19 @@ public class GridTest {
                 boolean[][] seed = new boolean[3][3];
                 seed[x][y] = true;
 
-                Grid grid = new Grid(seed);
+                GameState gameState = new GameState(seed);
 
-                assertEquals(1, grid.getNumberOfLivingNeighbours(centerCoordinate));
+                assertEquals(1, gameState.getNumberOfLivingNeighbours(centerCoordinate));
             }
         }
     }
 
     @Test
     public void getCellAtCoordinate_cellIsAlive_returnsLivingCellWithCorrectCoordinates() {
-        Grid grid = new Grid(new boolean[][]{{true}});
+        GameState gameState = new GameState(new boolean[][]{{true}});
         Coordinate coordinate = new Coordinate(0, 0);
 
-        Cell cell = grid.getCellAt(coordinate);
+        Cell cell = gameState.getCellAt(coordinate);
 
         assertTrue(cell.isAlive());
         assertEquals(coordinate, cell.getCoordinate());
@@ -127,10 +126,10 @@ public class GridTest {
 
     @Test
     public void getCellAtCoordinate_cellIsDead_returnsDeadCellWithCorrectCoordinates() {
-        Grid grid = new Grid(new boolean[][]{{false}});
+        GameState gameState = new GameState(new boolean[][]{{false}});
         Coordinate coordinate = new Coordinate(10, -20);
 
-        Cell cell = grid.getCellAt(coordinate);
+        Cell cell = gameState.getCellAt(coordinate);
 
         assertFalse(cell.isAlive());
         assertEquals(coordinate, cell.getCoordinate());
@@ -138,12 +137,12 @@ public class GridTest {
 
     @Test
     public void getAllNeighbours_forAGivenCoordinate_returnsAllItsNeighbouringCells() {
-        Grid grid = new Grid(new boolean[][]{
+        GameState gameState = new GameState(new boolean[][]{
                 {false, true},
                 {true, true}
         });
 
-        Collection<Cell> neighbours = grid.getAllNeighboursToCoordinate(new Coordinate(0, 0));
+        Collection<Cell> neighbours = gameState.getAllNeighboursToCoordinate(new Coordinate(0, 0));
 
         assertTrue(neighbours.contains(new Cell(new Coordinate(-1, -1), false)));
         assertTrue(neighbours.contains(new Cell(new Coordinate(-1,  0), false)));
