@@ -23,8 +23,8 @@ public class CoordinateInterpreter {
     }
 
     private static String getTrimmedStringBetweenFirst(char opening, char closing, String input) {
-        int indexOfFirstOpeningParentheses = input.indexOf('(');
-        int indexOfFirstComma = input.indexOf(',');
+        int indexOfFirstOpeningParentheses = input.indexOf(opening);
+        int indexOfFirstComma = input.indexOf(closing);
         return input.substring(indexOfFirstOpeningParentheses + 1, indexOfFirstComma).trim();
     }
 }

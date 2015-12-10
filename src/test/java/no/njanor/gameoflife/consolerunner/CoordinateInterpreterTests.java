@@ -25,9 +25,17 @@ public class CoordinateInterpreterTests {
 
     @Test
     public void fromString_stringHasOnePositiveCoordinateInIt_returnsListWithCorrectCoordinate() {
-        List<Coordinate> coordinates = CoordinateInterpreter.fromString("(1, 1)");
+        List<Coordinate> coordinates = CoordinateInterpreter.fromString("(1, 3)");
 
         assertEquals(1, coordinates.size());
-        assertTrue(coordinates.contains(new Coordinate(1, 1)));
+        assertTrue(coordinates.contains(new Coordinate(1, 3)));
+    }
+
+    @Test
+    public void fromString_stringHasOneNegativeCoordinateInIt_returnsListWithCorrectCoordinate() {
+        List<Coordinate> coordinates = CoordinateInterpreter.fromString("(-1, -20)");
+
+        assertEquals(1, coordinates.size());
+        assertTrue(coordinates.contains(new Coordinate(-1, -20)));
     }
 }
