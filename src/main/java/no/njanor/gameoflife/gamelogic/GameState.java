@@ -15,6 +15,13 @@ public class GameState {
             coordinatesOfLivingCells = Arrays.asList(coordinates).stream().filter(e -> e != null).collect(Collectors.toSet());
     }
 
+    public GameState(List<Coordinate> coordinates) {
+        if (coordinates == null)
+            coordinatesOfLivingCells = new HashSet<>();
+        else
+            coordinatesOfLivingCells = coordinates.stream().filter(e -> e != null).collect(Collectors.toSet());
+    }
+
     public Collection<Cell> getAllLivingCells() {
         return coordinatesOfLivingCells.stream()
                 .map(coordinate -> new Cell(coordinate, true))

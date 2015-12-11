@@ -2,7 +2,9 @@ package no.njanor.gameoflife.gamelogic;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -16,10 +18,32 @@ public class GameStateTest {
     }
 
     @Test
-    public void constructGameState_withNullAsSeed_CreatesWithoutSeed() {
-        GameState gameState = new GameState(null);
+    public void constructGameState_withNullAsCoordinateSeed_CreatesWithoutSeed() {
+        GameState gameState = new GameState((Coordinate)null);
 
         assertEquals(0, gameState.getAllLivingCells().size());
+    }
+
+    @Test
+    public void constructGameState_withNullAsCollectionSeed_CreatesWithoutSeed() {
+        GameState gameState = new GameState((List<Coordinate>)null);
+
+        assertEquals(0, gameState.getAllLivingCells().size());
+    }
+
+    @Test
+    public void constructGameState_withListOfCoordinates_createsWithCorrectSeed() {
+        Coordinate firstCoordinate = new Coordinate(12, -32);
+        Coordinate secondCoordinate = new Coordinate(-52, 10);
+        List<Coordinate> coordinates = new ArrayList<>();
+        coordinates.add(firstCoordinate);
+        coordinates.add(secondCoordinate);
+
+        GameState gameState = new GameState(coordinates);
+
+        assertEquals(2, gameState.getAllLivingCells().size());
+        assertTrue(gameState.getAllLivingCells().stream().map(c -> c.getCoordinate()).anyMatch(c -> c.equals(firstCoordinate)));
+        assertTrue(gameState.getAllLivingCells().stream().map(c -> c.getCoordinate()).anyMatch(c -> c.equals(secondCoordinate)));
     }
 
     @Test

@@ -17,4 +17,8 @@ pmd {
     ruleSets = ['java-codesize', 'java-design', 'java-naming', 'java-coupling', 'java-basic']
 }
 
+run {
+    args System.getProperty("args")
+}
+
 defaultTasks 'clean', 'pmdMain', 'build'
