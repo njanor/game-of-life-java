@@ -120,4 +120,22 @@ public class CoordinateTests {
 
         assertEquals("(41, 12)", coordinate.toString());
     }
+
+    @Test
+    public void fromString_withXCoordinateZero_returnsCorrectCoordinate() {
+        final String input = "(0, 41)";
+
+        Coordinate coordinate = Coordinate.fromString(input);
+
+        assertEquals(input, coordinate.toString());
+    }
+
+    @Test
+    public void fromString_withYCoordinateZero_returnsCorrectCoordinate() {
+        final String input = "(1231, 0)";
+
+        Coordinate coordinate = Coordinate.fromString(input);
+
+        assertEquals(input, coordinate.toString());
+    }
 }
