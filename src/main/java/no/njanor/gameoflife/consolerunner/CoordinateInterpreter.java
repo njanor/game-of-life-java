@@ -16,6 +16,8 @@ public class CoordinateInterpreter {
         String trimmedInput = trimInput(input);
 
         int indexOfCharacterAfterClosingParentheses = trimmedInput.indexOf(')') + 1;
+        if (indexOfCharacterAfterClosingParentheses == 0)
+            throw new IllegalArgumentException();
         String nextCoordinate = trimmedInput.substring(0, indexOfCharacterAfterClosingParentheses);
         String remainingCoordinates = trimmedInput.substring(indexOfCharacterAfterClosingParentheses);
         coordinates.add(Coordinate.fromString(nextCoordinate));

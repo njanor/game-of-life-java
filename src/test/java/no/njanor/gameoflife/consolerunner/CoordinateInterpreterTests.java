@@ -7,6 +7,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
 
 public class CoordinateInterpreterTests {
     @Test
@@ -53,5 +54,18 @@ public class CoordinateInterpreterTests {
         assertEquals(2, coordinates.size());
         assertTrue(coordinates.contains(firstCoordinate));
         assertTrue(coordinates.contains(secondCoordinate));
+    }
+
+    @Test
+    public void interpretString_stringDoesNotContainACoordinate_throwException() {
+        final String input = "1231223123123123!";
+
+        try {
+            CoordinateInterpreter.interpretString(input);
+            fail();
+        }
+        catch (IllegalArgumentException iae) {
+
+        }
     }
 }
