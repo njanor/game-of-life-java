@@ -1,6 +1,7 @@
 package no.njanor.gameoflife.consolerunner;
 
 import no.njanor.gameoflife.gamelogic.Coordinate;
+import no.njanor.gameoflife.utilities.CurrentRemainder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,15 @@ public class CoordinateInterpreter {
     private static List<Coordinate> getRemainingCoordinates(List<Coordinate> coordinates, final String input) {
         if (input == null || input.trim().isEmpty())
             return coordinates;
-        String trimmedInput = trimInput(input);
 
-        int indexOfCharacterAfterClosingParentheses = trimmedInput.indexOf(')') + 1;
-        if (indexOfCharacterAfterClosingParentheses == 0)
+        final String coordinateListPattern = "^\\s*\\([-+0-9,\\s]*?\\)(\\s*,\\s*\\([-+0-9,\\s]*?\\))*\\s*$";
+        if (!input.matches(coordinateListPattern))
             throw new IllegalArgumentException();
-        String nextCoordinate = trimmedInput.substring(0, indexOfCharacterAfterClosingParentheses);
-        String remainingCoordinates = trimmedInput.substring(indexOfCharacterAfterClosingParentheses);
-        coordinates.add(Coordinate.fromString(nextCoordinate));
-        return getRemainingCoordinates(coordinates, remainingCoordinates);
+
+        CurrentRemainder currentRemainder = new CurrentRemainder(input);
+
+        coordinates.add(Coordinate.fromString(currentRemainder.getCurrent()));
+        return getRemainingCoordinates(coordinates, currentRemainder.getRemainder());
     }
 
     private static String trimInput(String input) {
