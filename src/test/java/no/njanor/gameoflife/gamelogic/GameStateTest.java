@@ -179,4 +179,44 @@ public class GameStateTest {
         assertTrue(neighbours.contains(new Cell(new Coordinate( 1,  0), true)));
         assertTrue(neighbours.contains(new Cell(new Coordinate( 1,  1), true)));
     }
+
+    @Test
+    public void toString_withDefinedGridOfOneByOneContainingDeadCells_drawsGrid() {
+        GameState gameState = new GameState();
+
+        String output = gameState.toString(1, 1);
+
+        assertEquals("---\n| |\n---", output);
+    }
+
+    @Test
+    public void toString_withDefinedGridOf3By3ContainingDeadCells_drawsCorrectGrid() {
+        GameState gameState = new GameState();
+
+        String output = gameState.toString(3, 3);
+
+        final String expected = "-------\n| | | |\n| | | |\n| | | |\n-------";
+
+        assertEquals(expected, output);
+    }
+
+    @Test
+    public void toString_withDefinedGridOf1By1ContainingLivingCell_drawsCorrectGrid() {
+        GameState gameState = new GameState(new Coordinate(0, 0));
+
+        String output = gameState.toString(1, 1);
+
+        assertEquals("---\n|x|\n---", output);
+    }
+
+    @Test
+    public void toString_withDefinedGridOf3By3ContainingSomeLivingCells_drawsCorrectGrid() {
+        GameState gameState = new GameState(new Coordinate(0, 0), new Coordinate(1, 1), new Coordinate(2, 2));
+
+        String output = gameState.toString(3, 3);
+
+        final String expected = "-------\n|x| | |\n| |x| |\n| | |x|\n-------";
+
+        assertEquals(expected, output);
+    }
 }

@@ -49,4 +49,32 @@ public class GameState {
             }
         return neighbours;
     }
+
+    public String toString(int width, int height) {
+        StringBuilder result = new StringBuilder();
+        result.append(getDelimiter(width));
+        result.append('\n');
+        for (int i = 0; i < width; i++) {
+            result.append('|');
+            for (int j = 0; j < height; j++) {
+                result.append(writeCellAt(i, j));
+            }
+            result.append('\n');
+        }
+        result.append(getDelimiter(width));
+        return result.toString();
+    }
+
+    private String getDelimiter(int numberOfCells) {
+        StringBuilder delimiter = new StringBuilder();
+        for (int i = 0; i < (numberOfCells * 2) + 1; i++)
+            delimiter.append('-');
+        return delimiter.toString();
+    }
+
+    private String writeCellAt(final int x, final int y) {
+        if (getCellAt(new Coordinate(x, y)).isAlive())
+            return "x|";
+        return " |";
+    }
 }
